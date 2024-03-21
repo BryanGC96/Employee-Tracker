@@ -1,21 +1,10 @@
 const inquirer = require('inquirer');
-const { viewAllDepartments, viewAllRoles, viewAllEmployees} = require('./db/queries');
-
-
-
-
-// // Connects to the db
-// db.connect((err) => {
-//     if (err) {
-//         console.error('Error connecting to database: ', err);
-//         return;
-//     }
-//     console.log(`Connected to the employee_db database. `);
-// });
+const { viewAllDepartments, viewAllRoles, viewAllEmployees, addDepartment, addRole} = require('./db/queries');
 
 // Options of choices inside the prompt from Inquirer
 const depOptions = ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role'];
 
+function mainMenu() {
 inquirer
 .prompt([
     {
@@ -43,10 +32,51 @@ inquirer
             viewAllEmployees();
             break;
 
+        case 'Add a department':
+            inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'departmentName',
+                    message: 'Enter the name of the department:'
+                }
+            ]).then((answer) => {
+                addDepartment(answer.departmentName);
+            });
+            break;
+
+            case 'Add a role':
+                inquirer.prompt([
+                    {
+                        type: 'input',
+                        name: 'title',
+                        message: 'Enter the title of the new role:'
+                    },
+                    {
+                        type: 'input',
+                        name: 'salary',
+                        message: 'Enter the salary for the new role:'
+                    },
+                    {
+                        type: 'input',
+                        name: 'departmentId',
+                        message: 'Enter the department ID for the new role:'
+                    }
+            ]).then((answers) => {
+                addRole(answers.title, answers.salary, answers.departmentId);
+            });
+            break;
+
             default:
                 console.log('Invalid selection. ');
     }
+
+    // Repeats the prompt after each selection.
+    mainMenu();
 })
 .catch((error) => {
     console.error('Error with prompt: ', error);
 });
+
+};
+
+mainMenu();

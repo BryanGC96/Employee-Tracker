@@ -20,8 +20,6 @@ function viewAllDepartments() {
         console.log('All departments: ');
         console.table(results); // Shows the results in a table.
 
-        // Close the db connection.
-        db.end();
     })
 };
 
@@ -42,8 +40,6 @@ function viewAllRoles() {
         console.log('All roles: ');
         console.table(results); // Shows the results in a table.
 
-        // Close the db connection.
-        db.end();
     })
 };
 
@@ -74,9 +70,31 @@ LEFT JOIN
         console.log('All roles: ');
         console.table(results); // Shows the results in a table.
 
-        // Close the db connection.
-        db.end();
     })
 };
 
-module.exports = { viewAllDepartments, viewAllRoles, viewAllEmployees };
+function addDepartment(departmentName) {
+    const query = 'INSERT INTO department (name) VALUES (?)';
+    db.query(query, [departmentName], (err, results) => {
+        if (err) {
+            console.error('Error adding department: ', err);
+            return;
+        }
+        console.log(`Department "${departmentName}" added succesfully.`);
+    });
+};
+
+function addRole(title, salary, departmentId) {
+    const query = 'INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)';
+    db.query(query, [title, salary, departmentId], (err, results) => {
+        if (err) {
+            console.error('Error adding role: ', err);
+            return;
+        }
+        console.log(`Role "${title}" added successfully.`);
+    });
+}
+
+
+
+module.exports = { viewAllDepartments, viewAllRoles, viewAllEmployees, addDepartment, addRole };
