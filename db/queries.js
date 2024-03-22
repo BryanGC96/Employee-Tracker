@@ -19,7 +19,6 @@ function viewAllDepartments() {
         }
         console.log('All departments: ');
         console.table(results); // Shows the results in a table.
-
     })
 };
 
@@ -39,7 +38,6 @@ function viewAllRoles() {
         }
         console.log('All roles: ');
         console.table(results); // Shows the results in a table.
-
     })
 };
 
@@ -61,7 +59,6 @@ INNER JOIN
 LEFT JOIN 
     employee AS manager ON employee.manager_id = manager.id;
 `;
-
     db.query(query, (err, results) => {
         if (err) {
             console.error('Error fetching roles: ', err);
@@ -93,8 +90,30 @@ function addRole(title, salary, departmentId) {
         }
         console.log(`Role "${title}" added successfully.`);
     });
-}
+};
 
+function addEmployee(firstName, lastName, roleId, managerId) {
+    // Check if managerId is empty or not provided
+    const managerIdValue = managerId ? managerId : null; // Sets the managerId to 'NULL' in case theres no answer.
+    const query = 'INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)'; // Fills the content depending of the answers inside the query.
+    db.query(query, [firstName, lastName, roleId, managerIdValue], (err, results) => {
+        if (err) {
+            console.error('Error adding employee: ', err);
+            return;
+        }
+        console.log(`Employee "${firstName} ${lastName}" added successfully.`);
+    });
+};
 
+function updateEmployeeRole(employeeId, roleId) {
+    const query = 'UPDATE employee SET role_id = ? WHERE id = ?';
+    db.query(query, [roleId, employeeId], (err, results) => {
+        if (err) {
+            console.error('Error updating employee role: ', err);
+            return;
+        }
+        console.log('Employee role updated successfully.');
+    });
+};
 
-module.exports = { viewAllDepartments, viewAllRoles, viewAllEmployees, addDepartment, addRole };
+module.exports = { viewAllDepartments, viewAllRoles, viewAllEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole };

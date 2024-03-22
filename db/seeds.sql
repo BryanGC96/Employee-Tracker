@@ -1,5 +1,3 @@
-DELIMITER ;
-
 INSERT INTO department (name)
 VALUES 
 ("Sales"),
@@ -21,4 +19,3 @@ VALUES
 ("Tony", "Stark", 2, NULL),  
 ("Matt", "Murdock", 4, NULL),  
 ("Natasha", "Romanoff", 1, 2);
-
