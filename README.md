@@ -15,6 +15,6 @@ To run the project, you just need to open an integrated terminal and run the com
 ![image example of the running app](./Assets/432794541_715024660518100_3223943996260942101_n.png)
 
 ## Student info:
-**Student GitHub Repo link :**
+**Student GitHub Repo link :** https://github.com/BryanGC96/Employee-Tracker
 
-**Application video example link :**
+**Application video example link :** https://drive.google.com/file/d/1JoTFy4gPSOdSCND7tk04MUwA98R4FBwz/view?usp=sharing 
